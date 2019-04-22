@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/giroXText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="9dp"
+        android:text="X: Sem giroscópio"
+        android:textAlignment="viewStart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/giroYText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accelZText" />
+
+    <TextView
+        android:id="@+id/giroYText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Y: Sem giroscópio"
+        android:textAlignment="viewStart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/giroZText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/giroXText" />
+
+    <TextView
+        android:id="@+id/giroZText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="220dp"
+        android:text="Z: Sem giroscópio"
+        android:textAlignment="viewStart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/giroYText" />
+
+    <TextView
+        android:id="@+id/accelXText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="19dp"
+        android:text="X: Sem acelerômetro"
+        android:textAlignment="viewStart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/accelYText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/accelYText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="21dp"
+        android:text="Y: Sem acelerômetro"
+        android:textAlignment="viewStart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/accelZText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accelXText" />
+
+    <TextView
+        android:id="@+id/accelZText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="34dp"
+        android:text="Z: Sem acelerômetro"
+        android:textAlignment="viewStart"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/giroXText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accelYText" />
+
+    <Button
+        android:id="@+id/botaoSensores"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="30dp"
+        android:onClick="controlarSensores"
+        android:text="Iniciar!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botaoInferencia" />
+
+    <EditText
+        android:id="@+id/nomeText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Nome?"
+        android:inputType="textPersonName"
+        android:text="Antonio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/giroZText"
+        app:layout_constraintVertical_bias="0.089" />
+
+    <ToggleButton
+        android:id="@+id/botaoInferencia"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="14dp"
+        android:checked="false"
+        android:textOff="Treinamento"
+        android:textOn="Inferência"
+        app:layout_constraintBottom_toTopOf="@+id/botaoSensores"
+        app:layout_constraintEnd_toStartOf="@+id/atividadeSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeText" />
+
+    <Spinner
+        android:id="@+id/atividadeSpinner"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/botaoSensores"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/botaoInferencia"
+        app:layout_constraintTop_toBottomOf="@+id/nomeText" />
+
+    <EditText
+        android:id="@+id/tempoText"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Tempo?"
+        android:inputType="number"
+        android:text="15"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/nomeText"
+        app:layout_constraintTop_toBottomOf="@+id/giroZText"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>

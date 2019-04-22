@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="atividades_array">
+        <item>Andando</item>
+        <item>Correndo</item>
+        <item>Parado em pé</item>
+        <item>Sentado</item>
+        <item>Deitado</item>
+        <item>Subindo escadas</item>
+        <item>Descendo escadas</item>
+    </string-array>
+</resources>
