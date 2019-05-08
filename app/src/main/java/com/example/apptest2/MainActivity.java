@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         this.tempoText = (EditText) findViewById(R.id.tempoText);
 
         this.botaoInferencia = (ToggleButton) findViewById(R.id.botaoInferencia);
+        this.botaoSensores = (Button) findViewById(R.id.botaoSensores);
 
         //Implementação do spinner de atividades
         this.atividadeSpinner = (Spinner) findViewById(R.id.atividadeSpinner);
@@ -111,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public final void onSensorChanged(SensorEvent event) {
+        //Gambiarra para desligar sensores caso a contagem regressiva acabe
+        if(!sensoresRodando){
+            sensorManager.unregisterListener(this);
+        }
+
         Sensor sensor = event.sensor;
 
         //EXPERIMENTO : PEGAR NO CELULAR
@@ -139,27 +145,43 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(!sensoresRodando){
             sensoresRodando = true;
             botaoInferencia.setEnabled(false);
+            botaoSensores.setEnabled(false);
 
             this.nomeUsuario = nomeText.getText().toString();
 
+            //Delay para ativar sensores, usado para dar tempo extra ao usuário
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             sensorManager.registerListener(this, aSensor, SensorManager.SENSOR_DELAY_FASTEST);
             if(sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null) {
                 sensorManager.registerListener(this, gSensor, SensorManager.SENSOR_DELAY_FASTEST);
             }
-        }
-        else if(sensoresRodando){
-            sensoresRodando = false;
-            botaoInferencia.setEnabled(true);
-            sensorManager.unregisterListener(this);
 
-            if(inferenciaAtiva){
-                EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Inferencia", "?", listaSensorData);
-                envioHTTP.execute();
-            }else{
-                EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Treinamento", atividadeTreinamento, listaSensorData);
-                envioHTTP.execute();
-            }
+            // Dados são enviados depois de tempo especificado
+            int secs = Integer.parseInt(tempoText.getText().toString()); // Delay in seconds
+            Espera.executar(secs, new Espera.DelayCallback() {
+                @Override
+                public void afterDelay() {
+                    System.out.println("Depois de " + secs + " segundos");
+                    sensoresRodando = false;
+                    botaoInferencia.setEnabled(true);
+                    botaoSensores.setEnabled(true);
+
+                    if(inferenciaAtiva){
+                        EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Inferencia", "?", listaSensorData);
+                        envioHTTP.execute();
+                    }else{
+                        EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Treinamento", atividadeTreinamento, listaSensorData);
+                        envioHTTP.execute();
+                    }
+                    //Limpando lista para novo envio
+                    listaSensorData = new ArrayList<SensorData>();
+                }
+            });
         }
     }
 
