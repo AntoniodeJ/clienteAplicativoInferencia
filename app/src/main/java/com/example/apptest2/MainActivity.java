@@ -1,6 +1,8 @@
 package com.example.apptest2;
 
+import android.app.AlertDialog;
 import android.content.Context; //Cuidado!
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.hardware.*;
@@ -38,12 +40,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String atividadeTreinamento;
     private ArrayList<SensorData> listaSensorData;
     private String nomeUsuario;
+    public Context context;
 
 
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         listaSensorData = new ArrayList<SensorData>();
         this.accelXText = (TextView) findViewById(R.id.accelXText);
         this.accelYText = (TextView) findViewById(R.id.accelYText);
@@ -173,16 +177,47 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                     if(inferenciaAtiva){
                         EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Inferencia", "?", listaSensorData);
-                        envioHTTP.execute();
+                        try {
+                            if(envioHTTP.execute().get()) {
+                                dialogoConexaoOk();
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }else{
                         EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Treinamento", atividadeTreinamento, listaSensorData);
-                        envioHTTP.execute();
+                        try {
+                            if(envioHTTP.execute().get()) {
+                                dialogoConexaoOk();
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     //Limpando lista para novo envio
                     listaSensorData = new ArrayList<SensorData>();
                 }
             });
         }
+    }
+
+    private void dialogoConexaoOk() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(true);
+        builder.setTitle("Aviso");
+        builder.setMessage("Dados enviados com sucesso");
+        builder.setPositiveButton("Ok!",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

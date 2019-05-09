@@ -1,5 +1,9 @@
 package com.example.apptest2;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;
@@ -27,6 +31,7 @@ public class EnvioHTTP extends AsyncTask<Void, Void , Boolean> {
     String atividade;
     ArrayList<SensorData> listaDados;
     String stringListaDados;
+    Context context;
 
     public EnvioHTTP(String nome, String tipo, String atividade, ArrayList<SensorData> listaDados){
 
@@ -76,6 +81,9 @@ public class EnvioHTTP extends AsyncTask<Void, Void , Boolean> {
                 String recebido;
                 while((recebido = entrada.readLine()) != null) {
                     System.out.println(recebido);
+                    if(recebido.equals("RECEBIDO")){
+                        return true;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,4 +92,6 @@ public class EnvioHTTP extends AsyncTask<Void, Void , Boolean> {
 
         return null;
     }
+
+
 }
