@@ -3,6 +3,7 @@ package com.example.apptest2;
 import android.app.AlertDialog;
 import android.content.Context; //Cuidado!
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.hardware.*;
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         try {
                             if(envioHTTP.execute().get()) {
                                 dialogoConexaoOk();
+                                emitirSom();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -191,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         try {
                             if(envioHTTP.execute().get()) {
                                 dialogoConexaoOk();
+                                emitirSom();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -218,6 +221,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void emitirSom(){
+        MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.beep);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+
+                mp.release();
+            }
+
+        });
+        mp.start();
     }
 
     @Override
