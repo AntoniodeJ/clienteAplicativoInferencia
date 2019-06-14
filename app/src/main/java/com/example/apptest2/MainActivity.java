@@ -178,10 +178,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                     if(inferenciaAtiva){
                         EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Inferencia", "?", listaSensorData);
+                        emitirSom(0);
                         try {
                             if(envioHTTP.execute().get()) {
                                 dialogoConexaoOk();
-                                emitirSom();
+                                emitirSom(1);
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -190,10 +191,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         }
                     }else{
                         EnvioHTTP envioHTTP = new EnvioHTTP(nomeUsuario, "Treinamento", atividadeTreinamento, listaSensorData);
+                        emitirSom(0);
                         try {
                             if(envioHTTP.execute().get()) {
                                 dialogoConexaoOk();
-                                emitirSom();
+                                emitirSom(1);
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -223,8 +225,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         dialog.show();
     }
 
-    private void emitirSom(){
-        MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.beep);
+    private void emitirSom(int opcao){
+        MediaPlayer mp = null;
+        if(opcao==0) {
+            mp = MediaPlayer.create(MainActivity.this, R.raw.beep_fim);
+        }else if(opcao==1){
+            mp = MediaPlayer.create(MainActivity.this, R.raw.beep_envio);
+        }
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
