@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             //Delay para ativar sensores, usado para dar tempo extra ao usuário
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
